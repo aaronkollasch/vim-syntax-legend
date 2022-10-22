@@ -115,7 +115,7 @@ function! Main() abort
   for [l:key, l:value] in l:item_list
     let l:count = l:legend_rev_dict_count[l:value]
     if l:count !=# 0 
-      call add(l:output, printf('%s - %-30s', l:value, l:key))
+      call add(l:output, printf('%s - %-30s " %d', l:value, l:key, l:count))
     endif
   endfor
   
