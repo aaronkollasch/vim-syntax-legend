@@ -2,6 +2,10 @@ setlocal nocompatible
 
 function! Main() abort
   syntax on
+  let l:filetype = $VIM_SYNTAX_LEGEND_FILETYPE
+  if l:filetype !=# ''
+    exe 'setlocal filetype='.l:filetype
+  endif
 
   let l:joint_source_markers_list = []
   let l:legend_dict = {}

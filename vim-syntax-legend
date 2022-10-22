@@ -2,7 +2,7 @@
 
 function help()
 {
-    echo "syntax: vim-syntax-legend [-i <input>] [-o <output>] [-p prev-input]"
+    echo "syntax: vim-syntax-legend [-t <filetype>] [-i <input>] [-o <output>] [-p prev-input]"
 }
 
 function main()
@@ -14,7 +14,7 @@ function main()
     local has_input=0
     local has_output=0
 
-    while getopts "i:o:p:h" arg; do
+    while getopts "i:o:p:t:h" arg; do
 	case $arg in
 	    i)
 		has_input=1
@@ -30,6 +30,9 @@ function main()
 		;;
 	    p)
 		export VIM_SYNTAX_LEGEND_PREV_FILE="$OPTARG"
+		;;
+	    t)
+		export VIM_SYNTAX_LEGEND_FILETYPE="$OPTARG"
 		;;
 	esac
     done  
