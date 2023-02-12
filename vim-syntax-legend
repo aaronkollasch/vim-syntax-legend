@@ -13,8 +13,10 @@ function main()
     local input=""
     local has_input=0
     local has_output=0
+    local runtimepath=""
+    local has_rtp=0
 
-    while getopts "i:o:p:t:h" arg; do
+    while getopts "i:o:p:t:r:h" arg; do
 	case $arg in
 	    i)
 		has_input=1
@@ -34,6 +36,9 @@ function main()
 	    t)
 		export VIM_SYNTAX_LEGEND_FILETYPE="$OPTARG"
 		;;
+	    r)
+		has_rtp=1
+		runtimepath="$OPTARG"
 	esac
     done  
 
@@ -50,8 +55,14 @@ function main()
     local d=$(dirname $BASH_SOURCE)
     local f=$(realpath $d/vim-syntax-legend.vim)
 
+    set -x
     set +e
-    vim -E -s -c "source ${f}" -cqa "$input"
+    if [[ $has_rtp == 1 ]] ; then
+	local rtp="$(realpath $runtimepath)"
+	vim -E -s --clean --cmd "set runtimepath+=${rtp}" -c "source ${f}" -cqa "$input"
+    else
+	vim -E -s -c "source ${f}" -cqa "$input"
+    fi
     E=$?
     set -e
 
